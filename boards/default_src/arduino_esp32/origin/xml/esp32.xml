@@ -3345,3 +3345,86 @@
   <block type="esp32s2_pin" m-show="esp32s2"></block>
   <block type="esp32s3_pin" m-show="esp32s3"></block>
 </category>
+
+  <!-- SmartCar Category -->
+  <category id="catSmartCar" name="SmartCar" colour="#9932CC">
+    <block type="smartcar_move_forward"></block>
+    <block type="smartcar_move_backward"></block>
+    <block type="smartcar_rotate_left"></block>
+    <block type="smartcar_rotate_right"></block>
+    <block type="smartcar_stop"></block>
+    <block type="smartcar_set_servo_angle">
+      <value name="ANGLE">
+        <shadow type="math_number">
+          <field name="NUM">90</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_set_speed">
+      <value name="SPEED">
+        <shadow type="math_number">
+          <field name="NUM">2000</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_read_ir_left"></block>
+    <block type="smartcar_read_ir_middle"></block>
+    <block type="smartcar_read_ir_right"></block>
+    <block type="smartcar_get_distance_cm"></block>
+    <block type="smartcar_read_rfid_tag"></block>
+    <block type="smartcar_has_new_tag"></block>
+    <block type="smartcar_play_tone">
+      <value name="FREQUENCY">
+        <shadow type="math_number">
+          <field name="NUM">440</field>
+        </shadow>
+      </value>
+      <value name="DURATION">
+        <shadow type="math_number">
+          <field name="NUM">500</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_buzzer_stop"></block>
+    <block type="smartcar_is_exam_activated"></block>
+    <block type="smartcar_get_traffic_light_state">
+      <value name="LIGHT_ID">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_get_time_remain">
+      <value name="LIGHT_ID">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_set_pid_gains">
+      <value name="KP">
+        <shadow type="math_number">
+          <field name="NUM">1.0</field>
+        </shadow>
+      </value>
+      <value name="KI">
+        <shadow type="math_number">
+          <field name="NUM">0.1</field>
+        </shadow>
+      </value>
+      <value name="KD">
+        <shadow type="math_number">
+          <field name="NUM">0.5</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_get_left_rpm"></block>
+    <block type="smartcar_get_right_rpm"></block>
+    <block type="smartcar_set_target_rpm">
+      <value name="TARGET">
+        <shadow type="math_number">
+          <field name="NUM">150</field>
+        </shadow>
+      </value>
+    </block>
+  </category>

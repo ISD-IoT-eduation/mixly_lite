@@ -30,6 +30,8 @@ import * as ArduinoESP32SensorGenerators from './generators/sensor';
 import * as ArduinoESP32SerialGenerators from './generators/serial';
 import * as ArduinoESP32SidanGenerators from './generators/sidan';
 import * as ArduinoESP32StorageGenerators from './generators/storage';
+import * as ArduinoESP32SmartCarBlocks from './blocks/SmartCar';
+import * as ArduinoESP32SmartCarGenerators from './generators/SmartCar';
 
 import ArduinoESP32ZhHans from './language/zh-hans';
 import ArduinoESP32ZhHant from './language/zh-hant';
@@ -70,6 +72,8 @@ export {
     ArduinoESP32SidanGenerators,
     ArduinoESP32StorageGenerators,
     ArduinoESP32ToolsGenerators,
+    ArduinoESP32SmartCarBlocks,
+    ArduinoESP32SmartCarGenerators,
     ArduinoESP32ZhHans,
     ArduinoESP32ZhHant,
     ArduinoESP32En

@@ -69,6 +69,7 @@ import {
     ArduinoESP32SidanBlocks,
     ArduinoESP32StorageBlocks,
     ArduinoESP32ToolsBlocks,
+    ArduinoESP32SmartCarBlocks,
     ArduinoESP32ActuatorGenerators,
     ArduinoESP32CommunicateGenerators,
     ArduinoESP32ControlGenerators,
@@ -84,6 +85,7 @@ import {
     ArduinoESP32SidanGenerators,
     ArduinoESP32StorageGenerators,
     ArduinoESP32ToolsGenerators,
+    ArduinoESP32SmartCarGenerators,
     ArduinoESP32ZhHans,
     ArduinoESP32ZhHant,
     ArduinoESP32En
@@ -146,8 +148,9 @@ Object.assign(
     ArduinoESP32SerialBlocks,
     ArduinoESP32SidanBlocks,
     ArduinoESP32StorageBlocks,
-    ArduinoESP32ToolsBlocks
-);
+    ArduinoESP32ToolsBlocks,
+    ArduinoESP32SmartCarBlocks
+ );
 
 Object.assign(
     Blockly.Arduino.forBlock,
@@ -186,5 +189,6 @@ Object.assign(
     ArduinoESP32SerialGenerators,
     ArduinoESP32SidanGenerators,
     ArduinoESP32StorageGenerators,
-    ArduinoESP32ToolsGenerators
+    ArduinoESP32ToolsGenerators,
+    ArduinoESP32SmartCarGenerators
 );
