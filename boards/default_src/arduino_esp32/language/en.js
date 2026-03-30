@@ -120,4 +120,78 @@ En.ESP32_CONFIG_MESSAGE_USB_MODE = XML.render(En.ESP32_CONFIG_TEMPLATE, {
 
 En.BOARD_FS = 'Board FS';
 
+// ============================================
+// SmartCar Block Translations
+// ============================================
+
+// Motors
+En.SMARTCAR_MOVE_FORWARD = 'move forward';
+En.SMARTCAR_MOVE_BACKWARD = 'move backward';
+En.SMARTCAR_ROTATE_LEFT = 'rotate left';
+En.SMARTCAR_ROTATE_RIGHT = 'rotate right';
+En.SMARTCAR_STOP = 'stop';
+En.SMARTCAR_SET_SERVO = 'set steering angle';
+En.SMARTCAR_ANGLE = 'angle (45-135)';
+En.SMARTCAR_SET_SPEED = 'set motor speed';
+En.SMARTCAR_SPEED = 'speed (0-4095)';
+
+// IR Sensors
+En.SMARTCAR_READ_IR_LEFT = 'IR left sensor';
+En.SMARTCAR_READ_IR_MIDDLE = 'IR middle sensor';
+En.SMARTCAR_READ_IR_RIGHT = 'IR right sensor';
+En.SMARTCAR_GET_TRACK_STATE = 'track state';
+
+// Ultrasonic
+En.SMARTCAR_GET_DISTANCE = 'distance (cm)';
+
+// RFID
+En.SMARTCAR_READ_RFID = 'RFID tag UID';
+En.SMARTCAR_HAS_NEW_TAG = 'has new RFID tag';
+
+// Buzzer
+En.SMARTCAR_PLAY_TONE = 'play tone';
+En.SMARTCAR_FREQUENCY = 'frequency (Hz)';
+En.SMARTCAR_DURATION = 'duration (ms)';
+En.SMARTCAR_BUZZER_STOP = 'stop buzzer';
+
+// Firebase
+En.SMARTCAR_IS_EXAM_ACTIVATED = 'exam is activated';
+En.SMARTCAR_GET_TRAFFIC_LIGHT = 'traffic light';
+En.SMARTCAR_LIGHT_ID = 'ID';
+En.SMARTCAR_STATE = 'state';
+En.SMARTCAR_GET_TIME_REMAIN = 'time remain';
+En.SMARTCAR_TIME_REMAIN = 'time remaining';
+En.SMARTCAR_TARGET = 'target';
+
+// PID Control
+En.SMARTCAR_SET_PID = 'set PID gains';
+En.SMARTCAR_GET_LEFT_RPM = 'left wheel RPM';
+En.SMARTCAR_GET_RIGHT_RPM = 'right wheel RPM';
+En.SMARTCAR_SET_TARGET_RPM = 'set target RPM';
+
+// Tooltips
+En.SMARTCAR_MOVE_FORWARD_TOOLTIP = 'Make the car move forward';
+En.SMARTCAR_MOVE_BACKWARD_TOOLTIP = 'Make the car move backward';
+En.SMARTCAR_ROTATE_LEFT_TOOLTIP = 'Rotate the car left (counter-clockwise)';
+En.SMARTCAR_ROTATE_RIGHT_TOOLTIP = 'Rotate the car right (clockwise)';
+En.SMARTCAR_STOP_TOOLTIP = 'Stop all motors';
+En.SMARTCAR_SET_SERVO_TOOLTIP = 'Set the front servo angle (45-135 degrees, 90=center)';
+En.SMARTCAR_SET_SPEED_TOOLTIP = 'Set the speed for both motors (0-4095 PWM duty cycle)';
+En.SMARTCAR_READ_IR_LEFT_TOOLTIP = 'Read left IR sensor (true = black line detected)';
+En.SMARTCAR_READ_IR_MIDDLE_TOOLTIP = 'Read middle IR sensor (true = black line detected)';
+En.SMARTCAR_READ_IR_RIGHT_TOOLTIP = 'Read right IR sensor (true = black line detected)';
+En.SMARTCAR_GET_TRACK_STATE_TOOLTIP = 'Get current track state (0-7)';
+En.SMARTCAR_GET_DISTANCE_TOOLTIP = 'Get distance from ultrasonic sensor in centimeters';
+En.SMARTCAR_READ_RFID_TOOLTIP = 'Read the current RFID tag UID';
+En.SMARTCAR_HAS_NEW_TAG_TOOLTIP = 'Check if a new RFID tag is present';
+En.SMARTCAR_PLAY_TONE_TOOLTIP = 'Play a tone on the buzzer';
+En.SMARTCAR_BUZZER_STOP_TOOLTIP = 'Stop the buzzer';
+En.SMARTCAR_IS_EXAM_ACTIVATED_TOOLTIP = 'Check if the exam is currently activated';
+En.SMARTCAR_GET_TRAFFIC_LIGHT_TOOLTIP = 'Get traffic light state (RED, YELLOW, GREEN)';
+En.SMARTCAR_GET_TIME_REMAIN_TOOLTIP = 'Get time remaining for traffic light';
+En.SMARTCAR_SET_PID_TOOLTIP = 'Set PID controller gains for both wheels';
+En.SMARTCAR_GET_LEFT_RPM_TOOLTIP = 'Get current RPM of left wheel';
+En.SMARTCAR_GET_RIGHT_RPM_TOOLTIP = 'Get current RPM of right wheel';
+En.SMARTCAR_SET_TARGET_RPM_TOOLTIP = 'Set target RPM for both wheels';
+
 export default En;
