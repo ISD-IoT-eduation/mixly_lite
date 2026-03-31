@@ -42,3 +42,10 @@ Movement::MoveForward();
 from smartcar import Movement
 Movement.move_forward()
 ```
+
+## Running Locally
+
+```bash
+python3 serve.py
+```
+Then open http://localhost:3000

@@ -4,22 +4,9 @@ import os
 
 PORT = 3000
 
-class Handler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-        html = '''<!DOCTYPE html>
-<html>
-<head>
-    <title>Mixly Lite</title>
-</head>
-<body>
-    <h1>Mixly Lite Server</h1>
-    <p><a href="/index.html">Open Mixly</a></p>
-</body>
-</html>'''
-        self.wfile.write(html.encode())
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+Handler = http.server.SimpleHTTPRequestHandler
 
 print(f"Server running at http://localhost:{PORT}/")
 print("Open the link above in your browser!")
