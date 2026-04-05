@@ -49,3 +49,174 @@ Movement.move_forward()
 python3 serve.py
 ```
 Then open http://localhost:3000
+
+---
+
+## How to Create Custom Blocks
+
+### File Structure
+
+```
+boards/default_src/<board_type>/
+├── blocks/           # Define block appearance
+│   └── YourBlock.js
+├── generators/       # Define code generation
+│   └── YourBlock.js
+├── export.js         # Export modules
+├── index.js          # Register to Blockly
+└── template.xml      # Toolbox categories
+```
+
+### 1. Define Block (Visual Appearance)
+
+In `blocks/YourBlock.js`:
+
+```javascript
+// Simple statement block (no parameters)
+export const my_block = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("move forward");
+    this.setPreviousStatement(true);   // Connectable at top
+    this.setNextStatement(true);       // Connectable at bottom
+    this.setColour(290);               // Color (0-360)
+  }
+};
+
+// Block with number parameter
+export const my_speed_block = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("set speed")
+        .appendField(new Blockly.FieldNumber(50), "SPEED");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(290);
+  }
+};
+
+// Block with dropdown
+export const my_servo_block = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("set servo")
+        .appendField(new Blockly.FieldDropdown([
+          ["Left", "LEFT"],
+          ["Right", "RIGHT"]
+        ]), "SERVO")
+        .appendField("angle")
+        .appendField(new Blockly.FieldNumber(90, 0, 180), "ANGLE");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(290);
+  }
+};
+
+// Value block (expression - returns a value)
+export const my_value_block = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("distance (cm)");
+    this.setOutput(true, "Number");  // Has output
+    this.setColour(290);
+  }
+};
+```
+
+### 2. Define Generator (Code Generation)
+
+In `generators/YourBlock.js`:
+
+```javascript
+// Simple statement block
+export const my_block = function (_, generator) {
+    // Add import (only once, deduplicated by key)
+    generator.definitions_['import_movement'] = 'from smartcar import Movement';
+
+    // Add initialization code (only once)
+    generator.definitions_['init_motors'] = 'Movement.init_motors()';
+
+    // Return generated code (must end with \n for statements)
+    return 'Movement.move_forward()\n';
+};
+
+// Block with parameters
+export const my_speed_block = function (_, generator) {
+    // Get parameter value
+    const speed = this.getFieldValue('SPEED');
+
+    generator.definitions_['import_movement'] = 'from smartcar import Movement';
+
+    return `Movement.set_speed(${speed})\n`;
+};
+
+// Block with dropdown
+export const my_servo_block = function (_, generator) {
+    const servo = this.getFieldValue('SERVO');  // "LEFT" or "RIGHT"
+    const angle = this.getFieldValue('ANGLE');
+
+    generator.definitions_['import_movement'] = 'from smartcar import Movement';
+
+    return `Movement.set_servo("${servo}", ${angle})\n`;
+};
+
+// Value block (expression)
+export const my_value_block = function (_, generator) {
+    generator.definitions_['import_ultrasonic'] = 'from smartcar import Ultrasonic';
+
+    // Return [code, precedence]
+    return ['Ultrasonic.get_distance_cm()', generator.ORDER_ATOMIC];
+};
+```
+
+### 3. Register Module
+
+In `export.js`:
+```javascript
+import * as YourBlockBlocks from './blocks/YourBlock';
+import * as YourBlockGenerators from './generators/YourBlock';
+
+export {
+    YourBlockBlocks,
+    YourBlockGenerators
+};
+```
+
+In `index.js`:
+```javascript
+import { YourBlockBlocks, YourBlockGenerators } from './export';
+
+Object.assign(Blockly.Blocks, YourBlockBlocks);
+Object.assign(Blockly.Python.forBlock, YourBlockGenerators);
+```
+
+### 4. Add to Toolbox
+
+In `template.xml`:
+```xml
+<category id="catYourCategory" name="YourCategory" colour="290">
+  <block type="my_block"></block>
+  <block type="my_speed_block"></block>
+  <block type="my_value_block"></block>
+</category>
+```
+
+### 5. Rebuild
+
+```bash
+npm run build
+```
+
+### Key Concepts
+
+| Concept | Description |
+|---------|-------------|
+| `appendDummyInput()` | No input slot |
+| `appendValueInput("NAME")` | Has input slot (can connect other blocks) |
+| `setPreviousStatement(true)` | Connectable at top |
+| `setNextStatement(true)` | Connectable at bottom |
+| `setOutput(true, "Type")` | Has output (expression block) |
+| `getFieldValue('NAME')` | Get parameter value |
+| `generator.definitions_['key']` | Add import/setup (deduplicated by key) |
+| `return 'code\n'` | Statement block returns string |
+| `return ['code', ORDER]` | Expression block returns array |
