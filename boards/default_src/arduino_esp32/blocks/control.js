@@ -30,7 +30,9 @@ export const controls_runnig_core = {
             .appendField("Task")
             .appendField(new Blockly.FieldDropdown([["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"]]), "task")
             .appendField("Core")
-            .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"]]), "core");
+            .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"]]), "core")
+            .appendField("Priority")
+            .appendField(new Blockly.FieldDropdown([["1 (Lowest)", "1"], ["2", "2"], ["3", "3"], ["4 (Highest)", "4"]]), "priority");
         this.appendValueInput("length")
             .setCheck(null)
             .setAlign(Blockly.inputs.Align.RIGHT)

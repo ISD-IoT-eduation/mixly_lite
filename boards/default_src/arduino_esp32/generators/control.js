@@ -3,13 +3,14 @@ import { controls_delay } from '@mixly/arduino-avr/generators/control';
 export const controls_runnig_core = function (_, generator) {
     var task = this.getFieldValue('task');
     var core = this.getFieldValue('core');
+    var priority = this.getFieldValue('priority');
     var value_length = generator.valueToCode(this, 'length', generator.ORDER_ATOMIC);
     var branch = generator.statementToCode(this, 'setup');
     branch = branch.replace(/(^\s*)|(\s*$)/g, "");
     var branch1 = generator.statementToCode(this, 'loop');
     branch1 = branch1.replace(/(^\s*)|(\s*$)/g, "");
     generator.definitions_['esp32_task_' + task] = 'void task_' + task + '( void * pvParameters ){\nfor(;;){\n  ' + branch1 + '\n  vTaskDelay(1);\n}\n}\n';
-    generator.setups_['setups_esp32_task_' + task] = '' + branch + '\n  xTaskCreatePinnedToCore(task_' + task + ', "task_' + task + '", ' + value_length + ', NULL, 2, NULL, ' + core + ');\n';
+    generator.setups_['setups_esp32_task_' + task] = '' + branch + '\n  xTaskCreatePinnedToCore(task_' + task + ', "task_' + task + '", ' + value_length + ', NULL, ' + priority + ', NULL, ' + core + ');\n';
     return 'vTaskDelay(1);\n';
 }
 
