@@ -45,10 +45,30 @@ Movement.move_forward()
 
 ## Running Locally
 
+### Static File Server (Frontend only)
+
 ```bash
 python3 serve.py
 ```
 Then open http://localhost:3000
+
+### Full Backend (Compile + Upload)
+
+For browser-based compile and upload to ESP32, start the Node.js WebSocket backend:
+
+```bash
+# Install dependencies (first time)
+npm install
+
+# Start the server
+node server.js
+```
+
+Then open http://localhost:3000 in your browser. The Mixly toolbar will show **编译** (Compile) and **上传** (Upload) buttons.
+
+Requirements:
+- `arduino-cli` installed and available in `PATH`
+- ESP32 board package installed in `arduino-cli`
 
 ## Build Commands
 
@@ -70,17 +90,23 @@ python3 serve.py
 
 ```
 mixly_lite/
-├── SmartCar/                          # SmartCar C++ library
-│   ├── MotorControl.hpp/cpp           # DC motor & servo control
-│   ├── Movement.hpp/cpp               # High-level movement commands
-│   ├── IRSensors.hpp/cpp              # IR sensor reading & state detection
-│   ├── UltrasonicSensor.hpp/cpp       # Ultrasonic distance sensor
-│   ├── RFIDReader.hpp/cpp             # MFRC522 RFID reader (I2C)
-│   ├── MFRC522_I2C.hpp/cpp            # MFRC522 I2C driver
-│   ├── Buzzer.hpp/cpp                 # Buzzer control
-│   ├── Pinout.hpp                     # GPIO pin definitions
-│   ├── registers.h                    # MFRC522 register definitions
-│   └── pitches.h                      # Musical note definitions
+├── SmartCar/                          # SmartCar C++ library (Arduino 1.5 format)
+│   ├── library.properties             # Library metadata for arduino-cli
+│   ├── src/
+│   │   ├── SmartCar.h                 # Discovery header (includes all modules)
+│   │   └── SmartCar/
+│   │       ├── MotorControl.hpp/cpp   # DC motor & servo control
+│   │       ├── Movement.hpp/cpp       # High-level movement commands
+│   │       ├── IRSensors.hpp/cpp      # IR sensor reading & state detection
+│   │       ├── UltrasonicSensor.hpp/cpp
+│   │       ├── RFIDReader.hpp/cpp     # MFRC522 RFID reader (I2C)
+│   │       ├── MFRC522_I2C.hpp/cpp    # MFRC522 I2C driver
+│   │       ├── Buzzer.hpp/cpp         # Buzzer control
+│   │       ├── Pinout.hpp             # GPIO pin definitions
+│   │       ├── registers.h            # MFRC522 register definitions
+│   │       └── pitches.h              # Musical note definitions
+├── server.js                          # Node.js WebSocket backend (compile/upload)
+├── common/smartcar-plugin.js          # Frontend plugin for compile/upload buttons
 ├── boards/default_src/arduino_esp32/  # Arduino ESP32 board package
 │   ├── blocks/SmartCar.js             # Block visual definitions
 │   ├── generators/SmartCar.js         # C++ code generators
@@ -101,10 +127,18 @@ The ESP32 board includes built-in FreeRTOS multitasking blocks:
 
 ### Using SmartCar Library
 
-Copy the `SmartCar/` folder into your Arduino sketch directory. Generated code uses:
+The `SmartCar/` folder is packaged as an **Arduino 1.5 library**. When using `server.js`, it is automatically copied to the `libraries/` directory and linked during compile/upload. The generated code uses:
+
 ```cpp
+#include <SmartCar.h>
 #include "SmartCar/Movement.hpp"
 #include "SmartCar/IRSensors.hpp"
+```
+
+If you are compiling manually with `arduino-cli`, use the `--libraries` flag:
+
+```bash
+arduino-cli compile -b esp32:esp32:esp32 --libraries ./libraries ./sketch_build
 ```
 
 ---

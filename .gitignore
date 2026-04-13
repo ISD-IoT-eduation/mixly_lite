@@ -19,3 +19,13 @@ node_modules
 package-lock.json
 .idea
 yarn.lock
+
+# Build artifacts
+.build/
+.build_output/
+.build_output_test/
+
+# Runtime generated files
+sketch_build/
+libraries/
+
