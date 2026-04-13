@@ -50,6 +50,63 @@ python3 serve.py
 ```
 Then open http://localhost:3000
 
+## Build Commands
+
+```bash
+# Install dependencies (first time)
+npm install
+
+# Build all Arduino boards
+npm run build:boards:arduino
+
+# Build all boards
+npm run build:boards:all
+
+# Start local server
+python3 serve.py
+```
+
+## Project Structure
+
+```
+mixly_lite/
+├── SmartCar/                          # SmartCar C++ library
+│   ├── MotorControl.hpp/cpp           # DC motor & servo control
+│   ├── Movement.hpp/cpp               # High-level movement commands
+│   ├── IRSensors.hpp/cpp              # IR sensor reading & state detection
+│   ├── UltrasonicSensor.hpp/cpp       # Ultrasonic distance sensor
+│   ├── RFIDReader.hpp/cpp             # MFRC522 RFID reader (I2C)
+│   ├── MFRC522_I2C.hpp/cpp            # MFRC522 I2C driver
+│   ├── Buzzer.hpp/cpp                 # Buzzer control
+│   ├── Pinout.hpp                     # GPIO pin definitions
+│   ├── registers.h                    # MFRC522 register definitions
+│   └── pitches.h                      # Musical note definitions
+├── boards/default_src/arduino_esp32/  # Arduino ESP32 board package
+│   ├── blocks/SmartCar.js             # Block visual definitions
+│   ├── generators/SmartCar.js         # C++ code generators
+│   ├── blocks/control.js              # FreeRTOS task blocks
+│   ├── generators/control.js          # FreeRTOS task generators
+│   └── origin/xml/esp32.xml           # Toolbox configuration
+└── boards/default_src/micropython_esp32s3/  # MicroPython ESP32-S3 package
+    ├── blocks/SmartCar.js
+    └── generators/SmartCar.js
+```
+
+### FreeRTOS Support
+
+The ESP32 board includes built-in FreeRTOS multitasking blocks:
+- Create up to 8 concurrent tasks
+- Assign tasks to Core 0 (WiFi/networking) or Core 1 (robot control)
+- Configurable priority (1-4) and stack size
+
+### Using SmartCar Library
+
+Copy the `SmartCar/` folder into your Arduino sketch directory. Generated code uses:
+```cpp
+#include "SmartCar/Movement.hpp"
+#include "SmartCar/IRSensors.hpp"
+```
+
 ---
 
 ## How to Create Custom Blocks
@@ -204,7 +261,7 @@ In `template.xml`:
 ### 5. Rebuild
 
 ```bash
-npm run build
+npm run build:boards:arduino
 ```
 
 ### Key Concepts
