@@ -322,3 +322,25 @@ export const smartcar_set_target_rpm = {
         this.setTooltip(Blockly.Msg.SMARTCAR_SET_TARGET_RPM_TOOLTIP || "Set target RPM for both wheels");
     }
 };
+
+
+// ============================================
+// IMU SENSOR GENERATORS
+// ============================================
+
+export const smartcar_imu_init = function (_, generator) {
+    generator.definitions_['include_SmartCar_Imu'] = '#include "SmartCar/IMU.h"';
+    generator.setups_['smartcar_init_imu'] = 'ICM42688::begin();\n';
+    return;
+};
+
+export const smartcar_imu_set_filter = function (_, generator) {
+    generator.definitions_['include_SmartCar_Imu'] = '#include "SmartCar/IMU.h"';
+
+    var gyro = generator.valueToCode(this, 'gyroFilters', generator.ORDER_ATOMIC) || '0';
+    var acc = generator.valueToCode(this, 'accFilters', generator.ORDER_ATOMIC) || '0';
+
+    var code = 'ICM42688::setFilters(' + gyro + ',' + acc + ');\n';
+
+    return code;
+};
