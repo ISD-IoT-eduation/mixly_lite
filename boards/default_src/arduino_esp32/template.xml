@@ -1,6 +1,3 @@
 <%= htmlWebpackPlugin.tags.headTags.join('\n') %>
 <xml>
-<category id="catSmartCar" name="SmartCar" colour="290">
-  <block type="smartcar_imu_init"></block>
-</category>
 </xml>

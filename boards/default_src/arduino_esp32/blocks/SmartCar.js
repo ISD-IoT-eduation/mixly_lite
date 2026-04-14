@@ -328,19 +328,32 @@ export const smartcar_set_target_rpm = {
 // IMU SENSOR GENERATORS
 // ============================================
 
-export const smartcar_imu_init = function (_, generator) {
-    generator.definitions_['include_SmartCar_Imu'] = '#include "SmartCar/IMU.h"';
-    generator.setups_['smartcar_init_imu'] = 'ICM42688::begin();\n';
-    return;
+
+export const smartcar_imu_init = {
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendDummyInput()
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField(Blockly.Msg.IMU_INIT || "IMU Init");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.Msg.SMARTCAR_IMU_INIT_TOOLTIP || "Set up the IMU");
+    }
 };
 
-export const smartcar_imu_set_filter = function (_, generator) {
-    generator.definitions_['include_SmartCar_Imu'] = '#include "SmartCar/IMU.h"';
-
-    var gyro = generator.valueToCode(this, 'gyroFilters', generator.ORDER_ATOMIC) || '0';
-    var acc = generator.valueToCode(this, 'accFilters', generator.ORDER_ATOMIC) || '0';
-
-    var code = 'ICM42688::setFilters(' + gyro + ',' + acc + ');\n';
-
-    return code;
-};
+export const smartcar_imu_set_filter ={
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendValueInput("gyroFilters")
+            .setCheck(Boolean)
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField(Blockly.Msg.IMU_SET_GYRO_FILTER || "gyroFilters");
+        this.appendValueInput("accFilters")
+            .setCheck(Boolean)
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField(Blockly.Msg.IMU_SET_ACC_FILTER || "accFilters");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.Msg.SMARTCAR_IMU_SET_FILTER_TOOLTIP || "Set up the IMU Filter");
+    }
+}
