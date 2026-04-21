@@ -3427,4 +3427,5 @@
         </shadow>
       </value>
     </block>
+    <block type="smartcar_imu_init"></block>
   </category>
