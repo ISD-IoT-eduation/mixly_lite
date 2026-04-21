@@ -244,7 +244,7 @@ export const smartcar_set_target_rpm = function (_, generator) {
 export const smartcar_imu_init = function (_, generator) {
     generator.definitions_['include_SmartCar_Imu'] = '#include "SmartCar/IMU.h"';
     generator.setups_['smartcar_init_imu'] = 'ICM42688::begin();\n';
-    return;
+    return '';
 };
 
 export const smartcar_imu_set_filter = function (_, generator) {
