@@ -323,9 +323,20 @@ export const smartcar_set_target_rpm = {
     }
 };
 
+export const smartcar_pid_update_loop = {
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendDummyInput()
+            .appendField("PID update loop");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip("Update encoder RPM and apply PID output to both wheel speeds");
+    }
+};
+
 
 // ============================================
-// IMU SENSOR GENERATORS
+// IMU SENSOR BLOCKS
 // ============================================
 
 
@@ -344,11 +355,11 @@ export const smartcar_imu_init = {
 export const smartcar_imu_set_filter ={
     init: function () {
         this.setColour(SMARTCAR_HUE);
-        this.appendValueInput("gyroFilters")
+        this.appendValueInput("GyroFilters")
             .setCheck(Boolean)
             .setAlign(Blockly.inputs.Align.RIGHT)
             .appendField(Blockly.Msg.IMU_SET_GYRO_FILTER || "gyroFilters");
-        this.appendValueInput("accFilters")
+        this.appendValueInput("AccFilters")
             .setCheck(Boolean)
             .setAlign(Blockly.inputs.Align.RIGHT)
             .appendField(Blockly.Msg.IMU_SET_ACC_FILTER || "accFilters");
@@ -356,4 +367,74 @@ export const smartcar_imu_set_filter ={
         this.setNextStatement(true, null);
         this.setTooltip(Blockly.Msg.SMARTCAR_IMU_SET_FILTER_TOOLTIP || "Set up the IMU Filter");
     }
-}
+};
+
+export const smartcar_imu_set_filter_weight = {
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendValueInput("Alpha")
+            .setCheck(Number)
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField("IMU low pass acc alpha");
+        this.appendValueInput("Beta")
+            .setCheck(Number)
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField("gyro beta");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip("Set IMU low-pass filter alpha and beta from 0.0 to 1.0");
+    }
+};
+
+export const smartcar_imu_update = {
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendDummyInput()
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField("update IMU values");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip("Read IMU data and update filtered acceleration plus roll, pitch, and yaw");
+    }
+};
+
+export const smartcar_imu_get_value = {
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendDummyInput()
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField("IMU value")
+            .appendField(new Blockly.FieldDropdown([
+                ["acc X", "ACC_X"],
+                ["acc Y", "ACC_Y"],
+                ["acc Z", "ACC_Z"],
+                ["gyro X", "GYRO_X"],
+                ["gyro Y", "GYRO_Y"],
+                ["gyro Z", "GYRO_Z"],
+                ["filtered acc X", "FILTERED_ACC_X"],
+                ["filtered acc Y", "FILTERED_ACC_Y"],
+                ["filtered acc Z", "FILTERED_ACC_Z"],
+                ["filtered gyro X", "FILTERED_GYRO_X"],
+                ["filtered gyro Y", "FILTERED_GYRO_Y"],
+                ["filtered gyro Z", "FILTERED_GYRO_Z"]
+            ]), "VALUE");
+        this.setOutput(true, Number);
+        this.setTooltip("Get the latest IMU acceleration or gyroscope value");
+    }
+};
+
+export const smartcar_imu_get_orientation = {
+    init: function () {
+        this.setColour(SMARTCAR_HUE);
+        this.appendDummyInput()
+            .setAlign(Blockly.inputs.Align.RIGHT)
+            .appendField("IMU orientation")
+            .appendField(new Blockly.FieldDropdown([
+                ["roll", "ROLL"],
+                ["pitch", "PITCH"],
+                ["yaw", "YAW"]
+            ]), "VALUE");
+        this.setOutput(true, Number);
+        this.setTooltip("Get the latest roll, pitch, or yaw value in radians");
+    }
+};

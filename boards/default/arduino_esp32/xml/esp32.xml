@@ -3427,5 +3427,22 @@
         </shadow>
       </value>
     </block>
+    <block type="smartcar_pid_update_loop"></block>
     <block type="smartcar_imu_init"></block>
+    <block type="smartcar_imu_set_filter"></block>
+    <block type="smartcar_imu_set_filter_weight">
+      <value name="Alpha">
+        <shadow type="math_number">
+          <field name="NUM">0.2</field>
+        </shadow>
+      </value>
+      <value name="Beta">
+        <shadow type="math_number">
+          <field name="NUM">0.8</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="smartcar_imu_update"></block>
+    <block type="smartcar_imu_get_value"></block>
+    <block type="smartcar_imu_get_orientation"></block>
   </category>
