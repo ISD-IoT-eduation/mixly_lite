@@ -1,0 +1,94 @@
+name: Build Check
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build all boards
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      should_deploy: ${{ steps.deploy_check.outputs.should_deploy }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build all boards
+        run: |
+          set -o pipefail
+          npm run build:boards:all 2>&1 | tee build.log
+
+      - name: Detect webpack errors
+        run: |
+          if grep -E "^ERROR in |^Error: |Module not found" build.log; then
+            echo "::error::webpack reported errors during build"
+            exit 1
+          fi
+          echo "No webpack errors detected."
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          retention-days: 7
+
+      - name: Should deploy?
+        id: deploy_check
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/master" ] && [ "${{ github.event_name }}" = "push" ]; then
+            echo "should_deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Assemble Pages dist
+        if: steps.deploy_check.outputs.should_deploy == 'true'
+        run: |
+          mkdir -p _pages_dist/boards
+          cp index.html manifest.json CNAME main.js boards.json sw-config.json _pages_dist/
+          cp -r common files mixly-sw _pages_dist/
+          cp boards/index.html _pages_dist/boards/
+          cp -r boards/default boards/HDK _pages_dist/boards/
+
+      - name: Upload Pages artifact
+        if: steps.deploy_check.outputs.should_deploy == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _pages_dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: needs.build.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

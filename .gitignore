@@ -16,7 +16,6 @@ boards/default_src/**/build/lib/libs.json
 boards/default_src/**/build/upload/
 boards/extend/
 node_modules
-package-lock.json
 .idea
 yarn.lock
 
@@ -24,6 +23,7 @@ yarn.lock
 .build/
 .build_output/
 .build_output_test/
+boards/default/
 
 # Runtime generated files
 sketch_build/

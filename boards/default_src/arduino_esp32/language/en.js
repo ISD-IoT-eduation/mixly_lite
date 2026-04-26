@@ -169,6 +169,11 @@ En.SMARTCAR_GET_LEFT_RPM = 'left wheel RPM';
 En.SMARTCAR_GET_RIGHT_RPM = 'right wheel RPM';
 En.SMARTCAR_SET_TARGET_RPM = 'set target RPM';
 
+// IMU
+En.IMU_INIT = 'IMU init';
+En.IMU_SET_GYRO_FILTER = 'gyro filter';
+En.IMU_SET_ACC_FILTER = 'accelerometer filter';
+
 // Tooltips
 En.SMARTCAR_MOVE_FORWARD_TOOLTIP = 'Make the car move forward';
 En.SMARTCAR_MOVE_BACKWARD_TOOLTIP = 'Make the car move backward';
@@ -193,5 +198,7 @@ En.SMARTCAR_SET_PID_TOOLTIP = 'Set PID controller gains for both wheels';
 En.SMARTCAR_GET_LEFT_RPM_TOOLTIP = 'Get current RPM of left wheel';
 En.SMARTCAR_GET_RIGHT_RPM_TOOLTIP = 'Get current RPM of right wheel';
 En.SMARTCAR_SET_TARGET_RPM_TOOLTIP = 'Set target RPM for both wheels';
+En.SMARTCAR_IMU_INIT_TOOLTIP = 'Initialize the IMU sensor';
+En.SMARTCAR_IMU_SET_FILTER_TOOLTIP = 'Set the IMU gyro and accelerometer filter values';
 
 export default En;
